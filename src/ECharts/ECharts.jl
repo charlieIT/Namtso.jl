@@ -1,5 +1,6 @@
 include("Base.jl")
-include("Dict.jl")
+include("EChart.jl")
 include("JSON.jl")
+include("Options.jl")
 include("Series.jl")
 include("Show.jl")
