@@ -22,3 +22,7 @@ function echart_json(d::Dict,f_mode::Bool=false)
     end
     return "{$(join(els,","))}"
 end
+
+function JSON.json(renderer::Type{R}) where R <:Renderer
+    return JSON.json("renderer"=>lowercase(string(renderer)))
+end
