@@ -22,6 +22,7 @@ prepareboxplot(data, name="Series 1")
 ```
 """
 function prepareboxplot(data::Vector{I}; iqrbound=1.5, extremes::Bool=false, name=randstring(2), vertical=true) where I<:Union{Int64, Float64}
+    isempty(data) && return (axisdata=name, boxdata=[], outliers=[])
     v   = sort(data)
     mi  = minimum(v)
     q1  = quantile(v, 0.25)
@@ -83,7 +84,7 @@ prepared = prepareboxplot(dataset, vertical=true)
 )
 =#
 """
-function prepareboxplot(dataset::Vector{Vector{T}}; kwargs...) where T<:Union{Int64, Float64}
+function prepareboxplot(dataset::Vector{Vector{T}}; kwargs...) where T<:Union{Int64, Float64, Any}
     axisdata = []
     boxdata  = []
     outliers = []
