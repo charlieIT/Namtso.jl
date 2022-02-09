@@ -136,12 +136,13 @@
 
 Axis are an integral part of the inner workings of the library and are manipulated extensively in different methods.
 
-However, as they exist under an `options dictoinary`, most operations require searching for the corresponding axis under an object's `options` - `echart.options["xAxis"], echart.options["yAxis"]`. 
+However, as they exist under an `options dictionary`, most operations require searching for the corresponding axis under an object's `options` - `echart.options["xAxis"], echart.options["yAxis"] or echart["yAxis"]`. 
 
 Promoting Axis to some degree of `first-class citizenship` would enable multiple-dispatch and improve the ability to split different axis operations into different methods, would allow `Axis types` to be used both as method argument or result, as well as enable additional abstractions over structures that use and manipulate `axis`, such as `Series`, `SeriesOptions` or `EChart`.
 
 For instance, to obtain `xAxis` and `yAxis` from an `EChart instance`:  `echart[xAxis]; echart[yAxis]`. 
 To `set or push` to an `Axis`: `echart[xAxis] = [Dict(...)]; push!(echart[yAxis], axisdata...)`
+To define methods that operate over specific Axis `function some_operation(object, axis::Type{xAxis})`
 
 A more structured approach, similar to what is already implemented with `DataAttrs` could also be considered, if deemed reasonable, where an `Axis` would be a concrete type, composed of a dictionary of options and values.
 
@@ -149,7 +150,7 @@ A more structured approach, similar to what is already implemented with `DataAtt
 
 Current implementation uses methods named `dict` to iterate over a `Plot`, `Series` or `DataAttrs` and retrieve/build important chart configurations, such as the axis.
 
-However, the methods do not return a `dictionary`, but instead a `named tuple`. The approach is very sound and the usage of named tuples eases the process of accessing data fields provided by the methods, but method naming is inconsistent with its return(s). Also, changing the implementation to work over Base.Dict and returning dictionaries would lose the clear benefits of using named tuples and would make it harder to clearly understand the properties/fields returned, as these also differ according to the input object. 
+The approach is very sound and the usage of named tuples eases the process of accessing data fields provided by the methods, however, method naming and returns are inconsistent. Also, changing the implementation to work over Base.Dict and returning dictionaries would lose the clear benefits of using named tuples and would make it harder to clearly understand the properties/fields returned, as these also differ according to the input object. 
 
 Building on the structured approach of the named tuple, proposal is to introduce a `type Options` and a set of concrete subtypes `PlotOptions`, `SeriesOptions` and `DataOptions` that keep the structure and property naming of the `tuple`. 
 The current `dict` methods are replaced with a `Options methods`, that implement parsing logic and construct the appropriate `options object`. 
