@@ -1,4 +1,5 @@
 
+
 ### Summary
 
 ### Added
@@ -33,6 +34,7 @@
 
  - Added property `resize`, a boolean value, to indicate whether `container size reactivity` should be added to the chart's js script
  - Added property `renderer` to signal desired rendering method when displaying the chart
+ - Added keyword constructor
  
 #### Series
  
@@ -108,7 +110,7 @@
 
 #### Documentation
 
- - (WIP) Added examples to docs notebook
+ - Added examples to docs notebook
  - (WIP) Added light documentation to readme
 
 #### Code
